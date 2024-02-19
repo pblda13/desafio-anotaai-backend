@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.pamela.desafioanotaai.domain.category.exceptions.CategoryNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -27,6 +28,11 @@ public class CategoryService {
     public List<Category> getAll(){
         return this.repository.findAll();
     }
+    public Optional<Category> getById(String id){
+        return this.repository.findById(id);
+    }
+
+
 
     public Category update(String id, CategoryDTO categoryData){
         Category category = this.repository.findById(id)
@@ -49,4 +55,6 @@ public class CategoryService {
         this.repository.delete(category);
 
     }
+
+
 }
