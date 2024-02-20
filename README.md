@@ -25,7 +25,7 @@ Solving the challenge [AnotaAi Backend Challenge](https://github.com/githubanota
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Fernanda-Kipper/desafio-anotaai-backend.git
+git clone https://github.com/pblda13/desafio-anotaai-backend.git
 ```
 
 2. Install dependencies with Maven
