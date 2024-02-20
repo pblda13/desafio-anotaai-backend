@@ -40,7 +40,7 @@ return  ResponseEntity.ok().body(newCategory);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Category > delete (@PathParam("id") String id){
+    public ResponseEntity<Category > delete (@PathVariable("id") String id){
          this.service.delete (id);
         return  ResponseEntity.noContent().build();
 
