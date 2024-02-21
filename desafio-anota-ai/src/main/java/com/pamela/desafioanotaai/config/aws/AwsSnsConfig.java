@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AwsSnsConfig {
+
+    // Configuração para fornecer credenciais e informações de configuração para o Amazon SNS
+
     @Value("$(aws.region)")
     private String region;
     @Value("$(aws.accessKeyId)")
@@ -20,9 +23,11 @@ public class AwsSnsConfig {
     @Value("$(aws.sns.topic.catalog.arn)")
     private String  catalogTopicArn;
 
+    // Configura e fornece uma instância do Amazon SNS
+
     @Bean
     public AmazonSNS amazonSNSBuilder(){
-        BasicAWSCredentials credentials = new BasicAWSCredentials(accessKeyId,secretKey);
+        BasicAWSCredentials credentials = new BasicAWSCredentials(accessKeyId, secretKey);
 
         return AmazonSNSClientBuilder
                 .standard()
@@ -31,9 +36,10 @@ public class AwsSnsConfig {
                 .build();
     }
 
+    // Configura e fornece um tópico específico do Amazon SNS para eventos relacionados ao catálogo
+
     @Bean(name = "catalogEventsTopic")
     public Topic snsCatalogTopicBuilder(){
         return  new Topic().withTopicArn(catalogTopicArn);
     }
-
 }

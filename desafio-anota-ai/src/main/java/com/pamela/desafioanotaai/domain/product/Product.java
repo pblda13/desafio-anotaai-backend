@@ -14,14 +14,32 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Product {
 
+    // Identificador único do produto
 
     @Id
     private String id;
+
+    // Título do produto
+
     private String title;
+
+    // Descrição do produto
+
     private String description;
+
+    // Identificador do proprietário do produto
+
     private String ownerId;
+
+    // Preço do produto
+
     private Integer price;
+
+    // Categoria do produto
+
     private String category;
+
+    // Construtor para criar uma instância de produto a partir de um DTO
 
     public Product(ProductDTO data) {
         this.title = data.title();
@@ -30,6 +48,8 @@ public class Product {
         this.price = data.price();
         this.category = data.categoryId();
     }
+
+    // Método para gerar uma representação em string do produto
 
     @Override
     public String toString() {
@@ -43,7 +63,16 @@ public class Product {
         json.put("type", "product");
 
         return json.toString();
+    }
 
+    // Método para gerar uma representação em string da exclusão do produto
 
+    public String deleteToString(){
+        JSONObject json = new JSONObject();
+        json.put("id", this.id);
+        json.put("ownerId", this.ownerId);
+        json.put("type", "delete-produto");
+
+        return json.toString();
     }
 }

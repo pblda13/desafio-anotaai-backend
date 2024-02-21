@@ -18,20 +18,24 @@ public class CategoryController {
     public CategoryController(CategoryService service){
         this.service = service;
     }
+
+    // Rota para inserir uma nova categoria
+
     @PostMapping
     public ResponseEntity<Category> insert(@RequestBody CategoryDTO categoryData){
-Category newCategory = this.service.insert(categoryData);
-return  ResponseEntity.ok().body(newCategory);
-
-
-
+        Category newCategory = this.service.insert(categoryData);
+        return ResponseEntity.ok().body(newCategory);
     }
 
+    // Rota para obter todas as categorias
+
     @GetMapping
-    public  ResponseEntity<List<Category>> getAll(){
+    public ResponseEntity<List<Category>> getAll(){
         List<Category> categories = this.service.getAll();
         return ResponseEntity.ok().body(categories);
     }
+
+    // Rota para atualizar uma categoria existente
 
     @PutMapping("/{id}")
     public ResponseEntity<Category> update(@PathVariable("id") String id, @RequestBody CategoryDTO categoryData){
@@ -39,10 +43,11 @@ return  ResponseEntity.ok().body(newCategory);
         return ResponseEntity.ok().body(updatedCategory);
     }
 
+    // Rota para deletar uma categoria existente
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Category > delete (@PathVariable("id") String id){
-         this.service.delete (id);
+        this.service.delete (id);
         return  ResponseEntity.noContent().build();
-
     }
 }
