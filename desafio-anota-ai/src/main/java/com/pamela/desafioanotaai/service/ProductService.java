@@ -35,7 +35,7 @@ public class ProductService {
 
         this.repository.save(newProduct);
 
-        this.snsService.publish(new messageDTO(newProduct.getOwnerId()));
+        this.snsService.publish(new messageDTO(newProduct.toString()));
 
         return newProduct;
     }
@@ -50,8 +50,10 @@ public class ProductService {
                 .orElseThrow(ProductNotFoundException::new);
 
         if (productData.categoryId() != null) {
-            categoryService.getById(productData.categoryId())
-                    .ifPresent(product::setCategory);
+            this.categoryService.getById(productData.categoryId())
+                    .orElseThrow(ProductNotFoundException::new);
+            product.setCategory(productData.categoryId());
+
         }
         if(!productData.title().isEmpty()) product.setTitle(productData.title());
         if(!productData.description().isEmpty()) product.setDescription(productData.description());
@@ -60,7 +62,7 @@ public class ProductService {
 
         this.repository.save(product);
 
-this.snsService.publish(new messageDTO(product.getOwnerId()));
+this.snsService.publish(new messageDTO(product.toString()));
 
         return product;
     }

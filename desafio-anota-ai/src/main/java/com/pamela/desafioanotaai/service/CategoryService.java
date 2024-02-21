@@ -3,6 +3,8 @@ package com.pamela.desafioanotaai.service;
 import com.pamela.desafioanotaai.domain.category.Category;
 import com.pamela.desafioanotaai.domain.category.CategoryDTO;
 import com.pamela.desafioanotaai.repositories.CategoryRepository;
+import com.pamela.desafioanotaai.service.aws.AwsSnsService;
+import com.pamela.desafioanotaai.service.aws.messageDTO;
 import org.springframework.stereotype.Service;
 import com.pamela.desafioanotaai.domain.category.exceptions.CategoryNotFoundException;
 
@@ -13,14 +15,17 @@ import java.util.Optional;
 public class CategoryService {
 
     private CategoryRepository repository;
+    private final AwsSnsService snsService;
 
-    public CategoryService(CategoryRepository repository) {
+    public CategoryService(CategoryRepository repository,AwsSnsService snsService) {
         this.repository = repository;
+        this.snsService = snsService;
     }
 
     public Category insert(CategoryDTO categoryData) {
         Category newCategory = new Category(categoryData);
         this.repository.save(newCategory);
+        this.snsService.publish(new messageDTO(newCategory.toString()));
         return newCategory;
 
     }
@@ -43,6 +48,8 @@ public class CategoryService {
 
 
         this.repository.save(category);
+
+        this.snsService.publish(new messageDTO(category.toString()));
 
         return category;
     }
